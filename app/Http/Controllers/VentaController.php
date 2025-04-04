@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Venta;
 use App\Models\User;
+use Carbon\Carbon;
 
 class VentaController extends Controller
 {
     public function index()
     {
         $ventas = Venta::all();
+        
         return view('admin.ventas.index', compact('ventas'));
     }
 
@@ -45,6 +47,7 @@ class VentaController extends Controller
         $venta->cantidad = $request->cantidad;
         $venta->metodo_pago = $request->metodo_pago;
         $venta->cliente = $request->cliente;
+        
         $venta->save();
 
         return redirect()->route('admin.ventas.index')

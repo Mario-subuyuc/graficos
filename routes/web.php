@@ -66,9 +66,10 @@ Route::get('/admin/sesiones', [App\Http\Controllers\SessionController::class, 'i
 Route::get('/admin/sesiones/activos', [App\Http\Controllers\SessionController::class, 'obtenerUsuariosActivos'])->name('admin.sesiones.obtener')->middleware(['auth', 'verified','two_factor']);
 
 
+
+
+
 //rutas para ver el graficos de control de ventas
-// routes/web.php
-// routes/web.php
 Route::get('/grafico', [App\Http\Controllers\AdminController::class, 'mostrarGrafico'])->middleware(['auth', 'verified','two_factor']);
 
 
