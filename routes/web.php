@@ -6,7 +6,7 @@ use App\Http\Controllers\TwofactorCodeController;
 use App\Http\Controllers\KpiController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('welcome'); // or any other view you want
 });
 
 // Página principal
@@ -70,7 +70,7 @@ Route::get('/admin/sesiones/activos', [App\Http\Controllers\SessionController::c
 
 
 //rutas para ver el graficos de control de ventas
-Route::get('/grafico', [App\Http\Controllers\AdminController::class, 'mostrarGrafico'])->middleware(['auth', 'verified','two_factor']);
+//Route::get('/grafico', [App\Http\Controllers\AdminController::class, 'mostrarGrafico'])->middleware(['auth', 'verified','two_factor']);
 
 
 

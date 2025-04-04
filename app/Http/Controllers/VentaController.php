@@ -47,7 +47,6 @@ class VentaController extends Controller
         $venta->cantidad = $request->cantidad;
         $venta->metodo_pago = $request->metodo_pago;
         $venta->cliente = $request->cliente;
-        
         $venta->save();
 
         return redirect()->route('admin.ventas.index')

@@ -52,10 +52,52 @@
     </div>
 
     <div class="row">
-        <h2>Kpis
-            <hr>
-        </h2>
+        <!-- Ventas del Día -->
+        <div class="col-md-3 col-sm-6 col-12">
+            <div class="info-box bg-success">
+                <span class="info-box-icon"><i class="bi bi-cash-coin"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Ventas del Día</span>
+                    <span class="info-box-number">Q{{ number_format($ventasHoy, 2) }}</span>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Producto Estrella -->
+        <div class="col-md-3 col-sm-6 col-12">
+            <div class="info-box bg-warning">
+                <span class="info-box-icon"><i class="bi bi-star-fill"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Producto Estrella</span>
+                    <span class="info-box-number">{{ $productoEstrella ?? 'Ninguno' }}</span>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Promedio por Venta -->
+        <div class="col-md-3 col-sm-6 col-12">
+            <div class="info-box bg-info">
+                <span class="info-box-icon"><i class="bi bi-graph-up"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Ingreso Promedio</span>
+                    <span class="info-box-number">Q{{ number_format($promedioVenta, 2) }}</span>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Total Transacciones Hoy -->
+        <div class="col-md-3 col-sm-6 col-12">
+            <div class="info-box bg-primary">
+                <span class="info-box-icon"><i class="bi bi-receipt-cutoff"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Transacciones Hoy</span>
+                    <span class="info-box-number">{{ $transaccionesHoy }}</span>
+                </div>
+            </div>
+        </div>
     </div>
+    
+    <hr>    
     <!-- Content Wrapper. Contains page content -->
     <div class="container-fluid">
 
@@ -78,8 +120,7 @@
                         <!-- AREA CHART -->
                         <div class="card card-primary">
                             <div class="card-header">
-                                <h3 class="card-title">Area Chart</h3>
-
+                                <h3 class="card-title">ventas anules 2025/2024</h3>
                                 <div class="card-tools">
                                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                         <i class="fas fa-minus"></i>
@@ -102,7 +143,7 @@
                         <!-- DONUT CHART -->
                         <div class="card card-danger">
                             <div class="card-header">
-                                <h3 class="card-title">Donut Chart</h3>
+                                <h3 class="card-title">Articulos vendidos 2025</h3>
 
                                 <div class="card-tools">
                                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -121,59 +162,10 @@
                         </div>
                         <!-- /.card -->
 
-                        <!-- PIE CHART -->
-                        <div class="card card-danger">
-                            <div class="card-header">
-                                <h3 class="card-title">Pie Chart</h3>
-
-                                <div class="card-tools">
-                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                        <i class="fas fa-minus"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-tool" data-card-widget="remove">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <canvas id="pieChart"
-                                    style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                            </div>
-                            <!-- /.card-body -->
-                        </div>
-                        <!-- /.card -->
-
-                    </div>
-                    <!-- /.col (LEFT) -->
-                    <div class="col-md-6">
-                        <!-- LINE CHART -->
-                        <div class="card card-info">
-                            <div class="card-header">
-                                <h3 class="card-title">Line Chart</h3>
-
-                                <div class="card-tools">
-                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                        <i class="fas fa-minus"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-tool" data-card-widget="remove">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="chart">
-                                    <canvas id="lineChart"
-                                        style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                                </div>
-                            </div>
-                            <!-- /.card-body -->
-                        </div>
-                        <!-- /.card -->
-
                         <!-- BAR CHART -->
                         <div class="card card-success">
                             <div class="card-header">
-                                <h3 class="card-title">Bar Chart</h3>
+                                <h3 class="card-title">Compras 2025 clientes</h3>
 
                                 <div class="card-tools">
                                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -194,10 +186,61 @@
                         </div>
                         <!-- /.card -->
 
+                    </div>
+                    <!-- /.col (LEFT) -->
+                    <div class="col-md-6">
+
+                        <!-- BAR CHART -->
+                        <div class="card card-success">
+                            <div class="card-header">
+                                <h3 class="card-title">Productos Más Vendidos - 2025</h3>
+
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart">
+                                    <canvas id="barChart1"
+                                        style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+
+
+                        <!-- PIE CHART -->
+                        <div class="card card-danger">
+                            <div class="card-header">
+                                <h3 class="card-title">Total Vendedores 2025</h3>
+
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="pieChart"
+                                    style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+
                         <!-- STACKED BAR CHART -->
                         <div class="card card-success">
                             <div class="card-header">
-                                <h3 class="card-title">Stacked Bar Chart</h3>
+                                <h3 class="card-title">Metodos de Pago 2025</h3>
 
                                 <div class="card-tools">
                                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -233,183 +276,219 @@
     <!-- Page specific script -->
     <script>
         $(function() {
-
             ventas2024 = @json($totalVentas2024);
             ventas2025 = @json($totalVentas2025);
-            productos2025 = @json($ventasProducto2025);
-
             const dataVentas2024 = [...Array(12)].map((_, i) => ventas2024[i + 1] || 0);
             const dataVentas2025 = [...Array(12)].map((_, i) => ventas2025[i + 1] || 0);
-
-            console.log(ventas2024);
-            console.log(ventas2025);
-            console.log(dataVentas2024);
-            console.log(dataVentas2025);
-            console.log(productos2025);
-
             var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
-
             var areaChartData = {
-                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre',
+                    'Octubre', 'Noviembre', 'Diciembre'
+                ],
                 datasets: [{
-                        label: 'Digital Goods',
-                        backgroundColor: 'rgba(60,141,188,0.9)',
-                        borderColor: 'rgba(60,141,188,0.8)',
-                        pointRadius: false,
-                        pointColor: '#3b8bba',
-                        pointStrokeColor: 'rgba(60,141,188,1)',
-                        pointHighlightFill: '#fff',
-                        pointHighlightStroke: 'rgba(60,141,188,1)',
+                        label: 'Ventas 2024',
+                        backgroundColor: 'rgba(92, 107, 192, 0.5)',
+                        borderColor: 'rgba(92, 107, 192, 1)',
+                        pointRadius: 4,
+                        pointBackgroundColor: '#ffffff',
+                        pointBorderColor: 'rgba(92, 107, 192, 1)',
+                        pointBorderWidth: 2,
+                        pointHoverRadius: 7,
+                        pointHoverBackgroundColor: '#5c6bc0',
+                        pointHoverBorderColor: '#3b8bba',
+                        pointHoverBorderWidth: 3,
                         data: dataVentas2024
                     },
                     {
-                        label: 'Electronics',
-                        backgroundColor: 'rgba(210, 214, 222, 1)',
-                        borderColor: 'rgba(210, 214, 222, 1)',
-                        pointRadius: false,
-                        pointColor: 'rgba(210, 214, 222, 1)',
-                        pointStrokeColor: '#c1c7d1',
-                        pointHighlightFill: '#fff',
-                        pointHighlightStroke: 'rgba(220,220,220,1)',
+                        label: 'Ventas 2025',
+                        backgroundColor: 'rgba(0, 188, 212, 0.5)',
+                        borderColor: 'rgba(0, 188, 212, 1)',
+                        pointRadius: 5,
+                        pointBackgroundColor: '#ffffff',
+                        pointBorderColor: 'rgba(0, 188, 212, 1)',
+                        pointBorderWidth: 2,
+                        pointHoverRadius: 7,
+                        pointHoverBackgroundColor: '#00bcd4',
+                        pointHoverBorderColor: '#00bcd4',
+                        pointHoverBorderWidth: 3,
                         data: dataVentas2025
                     },
                 ]
-            }
 
+
+            }
             var areaChartOptions = {
                 maintainAspectRatio: false,
                 responsive: true,
                 legend: {
-                    display: false
+                    display: true
                 },
                 scales: {
                     xAxes: [{
                         gridLines: {
-                            display: false,
+                            display: true,
                         }
                     }],
                     yAxes: [{
                         gridLines: {
-                            display: false,
+                            display: true,
                         }
                     }]
                 }
             }
-
-            // This will get the first returned node in the jQuery collection.
             new Chart(areaChartCanvas, {
                 type: 'line',
                 data: areaChartData,
                 options: areaChartOptions
             })
+        })
+    </script>
 
-            //-------------
-            //- LINE CHART -
-            //--------------
-            var lineChartCanvas = $('#lineChart').get(0).getContext('2d')
-            var lineChartOptions = $.extend(true, {}, areaChartOptions)
-            var lineChartData = $.extend(true, {}, areaChartData)
-            lineChartData.datasets[0].fill = false;
-            lineChartData.datasets[1].fill = false;
-            lineChartOptions.datasetFill = false
+    <script>
+        productos2025 = @json($ventasProducto2025);
+        labels = Object.keys(productos2025);
+        data = Object.values(productos2025);
+        var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
+        var donutData = {
+            labels: labels,
+            datasets: [{
+                data: data,
+                backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+            }]
+        }
+        var donutOptions = {
+            maintainAspectRatio: false,
+            responsive: true,
+        }
+        //Create pie or douhnut chart
+        new Chart(donutChartCanvas, {
+            type: 'doughnut',
+            data: donutData,
+            options: donutOptions
+        })
+    </script>
 
-            var lineChart = new Chart(lineChartCanvas, {
-                type: 'line',
-                data: lineChartData,
-                options: lineChartOptions
-            })
-
-            //-------------
-            //- DONUT CHART -
-            //-------------
-            // Get context with jQuery - using jQuery's .get() method.
-            labels = Object.keys(productos2025);
-            data = Object.values(productos2025);
-            console.log(labels, data);
-            var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
-            var donutData = {
-                labels: labels,
-                datasets: [{
-                    data: data,
-                    backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
-                }]
+    <script>
+        const ventasUsuario2025 = @json($ventasUsuario2025);
+        const donutDataUsuarios = {
+            labels: Object.keys(ventasUsuario2025),
+            datasets: [{
+                data: Object.values(ventasUsuario2025),
+                backgroundColor: [
+                    '#f56954', '#00a65a', '#f39c12', '#00c0ef',
+                    '#3c8dbc', '#d2d6de', '#8e44ad', '#2ecc71',
+                    '#e74c3c', '#3498db', '#1abc9c', '#9b59b6'
+                ],
+                borderWidth: 1
+            }]
+        };
+        const pieOptions = {
+            maintainAspectRatio: false,
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'right',
+                }
             }
-            var donutOptions = {
-                maintainAspectRatio: false,
-                responsive: true,
-            }
-            //Create pie or douhnut chart
-            // You can switch between pie and douhnut using the method below.
-            new Chart(donutChartCanvas, {
-                type: 'doughnut',
-                data: donutData,
-                options: donutOptions
-            })
+        };
+        const pieChartCanvas = $('#pieChart').get(0).getContext('2d');
+        new Chart(pieChartCanvas, {
+            type: 'pie',
+            data: donutDataUsuarios,
+        });
+    </script>
 
-            //-------------
-            //- PIE CHART -
-            //-------------
-            // Get context with jQuery - using jQuery's .get() method.
-            var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
-            var pieData = donutData;
-            var pieOptions = {
-                maintainAspectRatio: false,
-                responsive: true,
-            }
-            //Create pie or douhnut chart
-            // You can switch between pie and douhnut using the method below.
-            new Chart(pieChartCanvas, {
-                type: 'pie',
-                data: pieData,
-                options: pieOptions
-            })
+    <script>
+        // Suponiendo que la variable barChartData se pasa desde el controlador
+        var barChartCanvas = $('#barChart').get(0).getContext('2d');
+        var barChartData = @json($barChartData);
 
-            //-------------
-            //- BAR CHART -
-            //-------------
-            var barChartCanvas = $('#barChart').get(0).getContext('2d')
-            var barChartData = $.extend(true, {}, areaChartData)
-            var temp0 = areaChartData.datasets[0]
-            var temp1 = areaChartData.datasets[1]
-            barChartData.datasets[0] = temp1
-            barChartData.datasets[1] = temp0
+        var barChartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            datasetFill: false
+        };
 
-            var barChartOptions = {
-                responsive: true,
-                maintainAspectRatio: false,
-                datasetFill: false
-            }
+        new Chart(barChartCanvas, {
+            type: 'bar',
+            data: barChartData,
+            options: barChartOptions
+        });
+    </script>
 
-            new Chart(barChartCanvas, {
-                type: 'bar',
-                data: barChartData,
-                options: barChartOptions
-            })
+    <script>
+        $(document).ready(function() {
+            // Datos para el gráfico de barras apiladas (métodos de pago)
+            var stackedBarChartData = {!! json_encode($barChartDataMetodoPago) !!};
 
-            //---------------------
-            //- STACKED BAR CHART -
-            //---------------------
-            var stackedBarChartCanvas = $('#stackedBarChart').get(0).getContext('2d')
-            var stackedBarChartData = $.extend(true, {}, barChartData)
+            // Configuración del gráfico de barras apiladas
+            var stackedBarChartCanvas = $('#stackedBarChart').get(0).getContext('2d');
 
             var stackedBarChartOptions = {
                 responsive: true,
                 maintainAspectRatio: false,
                 scales: {
                     xAxes: [{
-                        stacked: true,
+                        stacked: true
                     }],
                     yAxes: [{
                         stacked: true
                     }]
                 }
-            }
+            };
 
             new Chart(stackedBarChartCanvas, {
-                type: 'bar',
-                data: stackedBarChartData,
-                options: stackedBarChartOptions
-            })
-        })
+                type: 'bar', // Tipo de gráfico (barras)
+                data: stackedBarChartData, // Datos pasados desde PHP
+                options: stackedBarChartOptions // Configuración
+            });
+        });
+    </script>
+
+    <script>
+        // Datos que provienen del backend
+        var productosPorMes = @json($productosPorMes);
+
+        // Preparar los datos para el gráfico
+        var labels = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre",
+            "Noviembre", "Diciembre"
+        ];
+        var datasets = [{
+            label: 'Productos Más Vendidos',
+            data: [],
+            backgroundColor: 'rgba(60,141,188,0.9)', // Color de las barras
+            borderColor: 'rgba(60,141,188,0.8)',
+            borderWidth: 1
+        }];
+
+        // Llenar los datos de acuerdo a los productos más vendidos por mes
+        labels.forEach(function(mes, index) {
+            var totalPorMes = 0;
+            var productos = productosPorMes[index + 1] || []; // Añadir el 1 ya que los índices son 1-based en PHP
+            productos.forEach(function(producto) {
+                totalPorMes += producto.total_vendido;
+            });
+            datasets[0].data.push(totalPorMes); // Sumar el total vendido de los 3 productos más vendidos en ese mes
+        });
+
+        // Crear el gráfico
+        var barChartCanvas1 = $('#barChart1').get(0).getContext('2d');
+        var barChartData = {
+            labels: labels,
+            datasets: datasets
+        };
+
+        var barChartOptions1 = {
+            responsive: true,
+            maintainAspectRatio: false,
+            datasetFill: false
+        };
+
+        new Chart(barChartCanvas1, {
+            type: 'bar',
+            data: barChartData,
+            options: barChartOptions
+        });
     </script>
 @endsection

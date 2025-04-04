@@ -17,7 +17,7 @@ return new class extends Migration
                   ->constrained('users') // Se asegura que se refiere a la tabla 'users'
                   ->onDelete('cascade'); // Si el usuario es eliminado, también se elimina la venta
             $table->date('fecha')->default(now());
-            $table->decimal('total', 10, 2);
+            $table->decimal('total', 15, 2);
             $table->enum('articulo', ['Articulo1', 'Articulo2', 'Articulo3', 'Articulo4', 'Articulo5']);
             $table->integer('cantidad');
             $table->enum('metodo_pago', ['Efectivo', 'Tarjeta', 'Transferencia', 'Otro']);
