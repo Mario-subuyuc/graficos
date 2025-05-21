@@ -8,7 +8,7 @@
         <div>
             <x-input-label for="database" :value="__('Selecciona la Base de Datos')" />
             <select id="database" name="database" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" required>
-                <option value="mysql">MySQL</option>
+                <option value="oracle">Oracle</option>
                 <option value="pgsql">PostgreSQL</option>
                 <option value="sqlsrv">SQL Server</option>
             </select>

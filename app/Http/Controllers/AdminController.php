@@ -9,6 +9,7 @@ use App\Models\UserSession;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Config;
 
 
 class AdminController extends Controller
@@ -19,11 +20,18 @@ class AdminController extends Controller
         $total_ventas = Venta::count();
         $limiteTiempo = Carbon::now()->subSeconds(30)->timestamp;
 
+
+
         // Consultar los usuarios activos en la tabla sessions
         $usuarios = DB::table('sessions')
             ->where('last_activity', '>=', $limiteTiempo)
             ->get();
         $total_online = $usuarios->count();
+
+        // Obtén el nombre de la conexión activa
+        $connectionName = Config::get('database.default');
+        // Obtén el tipo de base de datos (mysql, pgsql, sqlsrv, etc.) de la conexión activa
+        $conexion  = Config::get('database.connections.' . $connectionName . '.driver');
 
         //ventas totales por año
         $ventas2024 = Venta::whereBetween('fecha', ['2024-01-01', '2024-12-31'])->get();
@@ -109,32 +117,47 @@ class AdminController extends Controller
             ]
         ];
 
+        /*
+        //no lo toquez y falla
+        $driver = DB::getDriverName();
+        switch ($driver) {
+            case 'sqlsrv':
+                $monthExpression = "MONTH([fecha])";
+                break;
+            case 'pgsql':
+                $monthExpression = "EXTRACT(MONTH FROM fecha)";
+                break;
+            default: // mysql, mariadb
+                $monthExpression = "MONTH(fecha)";
+                break;
+        }
+        $ventasSubquery = DB::table('ventas')
+            ->select(
+                DB::raw("$monthExpression AS mes"),
+                'articulo',
+                DB::raw('SUM(cantidad) as total_vendido')
+            )
+            ->whereYear('fecha', 2025)
+            ->groupBy(DB::raw($monthExpression), 'articulo');
 
-        $ventasPorMes = DB::table('ventas')
-            ->select(DB::raw('MONTH(fecha) as mes'), 'articulo', DB::raw('SUM(cantidad) as total_vendido'))
-            ->whereYear('fecha', 2025)  // Filtrar solo el año 2025
-            ->groupBy(DB::raw('MONTH(fecha)'), 'articulo')
-            ->orderBy('mes', 'asc')  // Ordenar por mes
-            ->orderByDesc('total_vendido')  // Ordenar por total vendido (de mayor a menor)
+        $ventasPorMes = DB::table(DB::raw("({$ventasSubquery->toSql()}) as sub"))
+            ->mergeBindings($ventasSubquery)
+            ->select('mes', 'articulo', 'total_vendido')
+            ->orderBy('mes')
+            ->orderByDesc('total_vendido')
             ->get();
-
-        // Agrupar los resultados por mes
         $productosPorMes = [];
 
-        // Recorremos las ventas y agrupamos por mes
         foreach ($ventasPorMes as $venta) {
-            $productosPorMes[$venta->mes][] = [
-                'articulo' => $venta->articulo,
-                'total_vendido' => $venta->total_vendido
-            ];
+            if (!isset($productosPorMes[$venta->mes])) {
+                $productosPorMes[$venta->mes] = [[
+                    'articulo' => $venta->articulo,
+                    'total_vendido' => $venta->total_vendido
+                ]]; // Solo el más vendido
+            }
         }
-
-        // Limitar solo al producto más vendido por mes
-        foreach ($productosPorMes as $mes => &$productos) {
-            // Solo tomar el primer producto más vendido (el primero ya está ordenado por total_vendido descendente)
-            $productos = array_slice($productos, 0, 1);
-        }
-
+        //hasta por aca           
+        */
 
 
         $hoy = Carbon::today();
@@ -143,7 +166,7 @@ class AdminController extends Controller
         $ventasHoy = DB::table('ventas')
             ->whereDate('fecha', $hoy)
             ->sum(DB::raw('cantidad '));
-    
+
         // 2. Producto estrella del día (más vendido hoy por cantidad)
         $productoEstrella = DB::table('ventas')
             ->select('articulo', DB::raw('SUM(cantidad) as total_cantidad'))
@@ -152,12 +175,13 @@ class AdminController extends Controller
             ->orderByDesc('total_cantidad')
             ->limit(1)
             ->value('articulo'); // Devuelve solo el nombre del artículo
-    
+
+
         // 3. Promedio de ingreso por venta (hoy)
         $promedioVenta = DB::table('ventas')
             ->whereDate('fecha', $hoy)
             ->avg(DB::raw('cantidad'));
-    
+
         // 4. Total de transacciones del día (ventas realizadas)
         $transaccionesHoy = DB::table('ventas')
             ->whereDate('fecha', $hoy)
@@ -180,9 +204,10 @@ class AdminController extends Controller
             'total_online',
             'productosPorMes',
             'ventasHoy',
-        'productoEstrella',
-        'promedioVenta',
-        'transaccionesHoy'
+            'productoEstrella',
+            'promedioVenta',
+            'transaccionesHoy',
+            'conexion'
 
         ));
     }

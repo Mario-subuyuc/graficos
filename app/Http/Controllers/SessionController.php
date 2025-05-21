@@ -18,7 +18,6 @@ class SessionController extends Controller
             ->join('users', 'sessions.user_id', '=', 'users.id')
             ->select('users.id', 'users.name', 'users.email', 'sessions.last_activity', 'sessions.ip_address', 'sessions.user_agent')
             ->get();
-
         return view('admin.sesiones.index', compact('usuarios'));
     }
 

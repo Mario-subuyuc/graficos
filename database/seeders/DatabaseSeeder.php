@@ -180,7 +180,7 @@ class DatabaseSeeder extends Seeder
         
         Venta::create([
             'user_id' => 2,
-            'fecha' => '2025-01-28',
+            'fecha' => '2025-02-14',
             'total' => 6000.65,
             'articulo' => 'Articulo5',
             'cantidad' => 12,
@@ -190,7 +190,7 @@ class DatabaseSeeder extends Seeder
 
         Venta::create([
             'user_id' => 3,
-            'fecha' => '2025-01-28',
+            'fecha' => '2025-03-20',
             'total' => 5700.65,
             'articulo' => 'Articulo2',
             'cantidad' => 15,

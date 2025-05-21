@@ -4,8 +4,9 @@
     <script src="{{ url('plugins/chart.js/Chart.min.js') }}"></script>
 @endsection
 @section('content')
-    <div class="row">
+    <div class="row d-flex justify-content-between align-items-center">
         <h1>Bienvenido : {{ Auth::user()->name }}</h1>
+        <p>Conectado a la base de datos: {{ $conexion }}</p>
     </div>
     <hr>
     <div class="row">
@@ -62,7 +63,7 @@
                 </div>
             </div>
         </div>
-    
+
         <!-- Producto Estrella -->
         <div class="col-md-3 col-sm-6 col-12">
             <div class="info-box bg-warning">
@@ -73,7 +74,7 @@
                 </div>
             </div>
         </div>
-    
+
         <!-- Promedio por Venta -->
         <div class="col-md-3 col-sm-6 col-12">
             <div class="info-box bg-info">
@@ -84,7 +85,7 @@
                 </div>
             </div>
         </div>
-    
+
         <!-- Total Transacciones Hoy -->
         <div class="col-md-3 col-sm-6 col-12">
             <div class="info-box bg-primary">
@@ -96,8 +97,8 @@
             </div>
         </div>
     </div>
-    
-    <hr>    
+
+    <hr>
     <!-- Content Wrapper. Contains page content -->
     <div class="container-fluid">
 
@@ -120,7 +121,7 @@
                         <!-- AREA CHART -->
                         <div class="card card-primary">
                             <div class="card-header">
-                                <h3 class="card-title">ventas anules 2025/2024</h3>
+                                <h3 class="card-title">Ventas Anules 2025/2024</h3>
                                 <div class="card-tools">
                                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                         <i class="fas fa-minus"></i>
@@ -143,7 +144,7 @@
                         <!-- DONUT CHART -->
                         <div class="card card-danger">
                             <div class="card-header">
-                                <h3 class="card-title">Articulos vendidos 2025</h3>
+                                <h3 class="card-title">Venta Articulos 2025</h3>
 
                                 <div class="card-tools">
                                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -193,7 +194,7 @@
                         <!-- BAR CHART -->
                         <div class="card card-success">
                             <div class="card-header">
-                                <h3 class="card-title">Productos Más Vendidos - 2025</h3>
+                                <h3 class="card-title">Productos Más Vendidos del Mes</h3>
 
                                 <div class="card-tools">
                                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -218,7 +219,7 @@
                         <!-- PIE CHART -->
                         <div class="card card-danger">
                             <div class="card-header">
-                                <h3 class="card-title">Total Vendedores 2025</h3>
+                                <h3 class="card-title">Total Ventas Vendedores</h3>
 
                                 <div class="card-tools">
                                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -270,8 +271,6 @@
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
-
-    <!-- Page specific script -->
 
     <!-- Page specific script -->
     <script>
@@ -407,7 +406,15 @@
         var barChartOptions = {
             responsive: true,
             maintainAspectRatio: false,
-            datasetFill: false
+            datasetFill: false,
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+
         };
 
         new Chart(barChartCanvas, {
@@ -447,45 +454,43 @@
     </script>
 
     <script>
-        // Datos que provienen del backend
         var productosPorMes = @json($productosPorMes);
 
-        // Preparar los datos para el gráfico
         var labels = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre",
             "Noviembre", "Diciembre"
         ];
+
+        var data = [];
+
+        for (var i = 1; i <= 12; i++) {
+            if (productosPorMes[i]) {
+                data.push(productosPorMes[i][0].total_vendido);
+            } else {
+                data.push(0);
+            }
+        }
+
         var datasets = [{
-            label: 'Productos Más Vendidos',
-            data: [],
-            backgroundColor: 'rgba(60,141,188,0.9)', // Color de las barras
+            label: 'Producto más vendido por mes (total unidades)',
+            data: data,
+            backgroundColor: 'rgba(60,141,188,0.9)',
             borderColor: 'rgba(60,141,188,0.8)',
             borderWidth: 1
         }];
 
-        // Llenar los datos de acuerdo a los productos más vendidos por mes
-        labels.forEach(function(mes, index) {
-            var totalPorMes = 0;
-            var productos = productosPorMes[index + 1] || []; // Añadir el 1 ya que los índices son 1-based en PHP
-            productos.forEach(function(producto) {
-                totalPorMes += producto.total_vendido;
-            });
-            datasets[0].data.push(totalPorMes); // Sumar el total vendido de los 3 productos más vendidos en ese mes
-        });
-
-        // Crear el gráfico
-        var barChartCanvas1 = $('#barChart1').get(0).getContext('2d');
+        var barChartCanvas = $('#barChart1').get(0).getContext('2d');
         var barChartData = {
             labels: labels,
             datasets: datasets
         };
 
-        var barChartOptions1 = {
+        var barChartOptions = {
             responsive: true,
             maintainAspectRatio: false,
             datasetFill: false
         };
 
-        new Chart(barChartCanvas1, {
+        new Chart(barChartCanvas, {
             type: 'bar',
             data: barChartData,
             options: barChartOptions

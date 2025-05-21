@@ -61,7 +61,7 @@
                     <script>
                         $(function() {
                             $("#example1").DataTable({
-                                "pageLength": 5,
+                                "pageLength": 10,
                                 "lengthMenu": [
                                     [5, 10, 20, -1],
                                     [5, 10, 20, "Todos"]
@@ -88,6 +88,7 @@
                                 "responsive": true,
                                 "lengthChange": true,
                                 "autoWidth": false,
+                                "order": [[2, 'desc']],
                                 buttons: [{
                                         extend: 'collection',
                                         text: '<i class="bi bi-file-earmark-text"></i> Reportes',
