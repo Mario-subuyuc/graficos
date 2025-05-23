@@ -202,7 +202,7 @@ class AdminController extends Controller
             'total_usuarios',
             'total_ventas',
             'total_online',
-            'productosPorMes',
+            //'productosPorMes',
             'ventasHoy',
             'productoEstrella',
             'promedioVenta',

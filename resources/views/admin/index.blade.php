@@ -453,47 +453,5 @@
         });
     </script>
 
-    <script>
-        var productosPorMes = @json($productosPorMes);
-
-        var labels = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre",
-            "Noviembre", "Diciembre"
-        ];
-
-        var data = [];
-
-        for (var i = 1; i <= 12; i++) {
-            if (productosPorMes[i]) {
-                data.push(productosPorMes[i][0].total_vendido);
-            } else {
-                data.push(0);
-            }
-        }
-
-        var datasets = [{
-            label: 'Producto más vendido por mes (total unidades)',
-            data: data,
-            backgroundColor: 'rgba(60,141,188,0.9)',
-            borderColor: 'rgba(60,141,188,0.8)',
-            borderWidth: 1
-        }];
-
-        var barChartCanvas = $('#barChart1').get(0).getContext('2d');
-        var barChartData = {
-            labels: labels,
-            datasets: datasets
-        };
-
-        var barChartOptions = {
-            responsive: true,
-            maintainAspectRatio: false,
-            datasetFill: false
-        };
-
-        new Chart(barChartCanvas, {
-            type: 'bar',
-            data: barChartData,
-            options: barChartOptions
-        });
-    </script>
+    
 @endsection

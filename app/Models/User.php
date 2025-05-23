@@ -14,7 +14,7 @@ class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
-
+    public $timestamps = false;
     protected $connection;
     public function __construct(array $attributes = [])
     {
@@ -66,7 +66,7 @@ class User extends Authenticatable
     {
         $this->timestamps = false;
         $this->two_factor_code = rand(100000, 999999);
-        $this->two_factor_expires_at = now()->addMinutes(10);
+        $this->two_factor_expires_at = now()->addMinutes(10)->format('Y-m-d H:i:s');
         $this->save();
     }
 
