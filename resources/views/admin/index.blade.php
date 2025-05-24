@@ -13,7 +13,7 @@
         <div class="col-lg-4 col-4">
             <div class="small-box bg-teal">
                 <div class="inner">
-                    <h3>{{ $total_ventas }}</h3>
+                    <h3>{{$total_ventas1}}</h3>
                     <p>Ventas</p>
                 </div>
                 <div class="icon">
@@ -56,20 +56,20 @@
         <!-- Ventas del Día -->
         <div class="col-md-3 col-sm-6 col-12">
             <div class="info-box bg-success">
-                <span class="info-box-icon"><i class="bi bi-cash-coin"></i></span>
+                <span class="info-box-icon"><i class="bi bi-graph-up"></i></span>
                 <div class="info-box-content">
-                    <span class="info-box-text">Ventas del Día</span>
-                    <span class="info-box-number">Q{{ number_format($ventasHoy, 2) }}</span>
+                    <span class="info-box-text">Ventas del Día<br><small>(unidades vendidas)</small></span>
+                    <span class="info-box-number">{{ number_format($ventasHoy) }}</span>
                 </div>
             </div>
         </div>
 
         <!-- Producto Estrella -->
         <div class="col-md-3 col-sm-6 col-12">
-            <div class="info-box bg-warning">
+            <div class="info-box bg-danger">
                 <span class="info-box-icon"><i class="bi bi-star-fill"></i></span>
                 <div class="info-box-content">
-                    <span class="info-box-text">Producto Estrella</span>
+                    <span class="info-box-text">Producto Estrella<br><small>(más vendido)</small></span>
                     <span class="info-box-number">{{ $productoEstrella ?? 'Ninguno' }}</span>
                 </div>
             </div>
@@ -77,10 +77,10 @@
 
         <!-- Promedio por Venta -->
         <div class="col-md-3 col-sm-6 col-12">
-            <div class="info-box bg-info">
-                <span class="info-box-icon"><i class="bi bi-graph-up"></i></span>
+            <div class="info-box bg-warning">
+                <span class="info-box-icon"><i class="bi bi-cash-coin"></i></span>
                 <div class="info-box-content">
-                    <span class="info-box-text">Ingreso Promedio</span>
+                    <span class="info-box-text">Ingreso del dia<br><small>(cantidad monetaria)</small></span>
                     <span class="info-box-number">Q{{ number_format($promedioVenta, 2) }}</span>
                 </div>
             </div>
@@ -91,7 +91,7 @@
             <div class="info-box bg-primary">
                 <span class="info-box-icon"><i class="bi bi-receipt-cutoff"></i></span>
                 <div class="info-box-content">
-                    <span class="info-box-text">Transacciones Hoy</span>
+                    <span class="info-box-text">Transacciones <br><small>(ventas hoy)</small></span>
                     <span class="info-box-number">{{ $transaccionesHoy }}</span>
                 </div>
             </div>
@@ -191,53 +191,6 @@
                     <!-- /.col (LEFT) -->
                     <div class="col-md-6">
 
-                        <!-- BAR CHART -->
-                        <div class="card card-success">
-                            <div class="card-header">
-                                <h3 class="card-title">Productos Más Vendidos del Mes</h3>
-
-                                <div class="card-tools">
-                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                        <i class="fas fa-minus"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-tool" data-card-widget="remove">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="chart">
-                                    <canvas id="barChart1"
-                                        style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                                </div>
-                            </div>
-                            <!-- /.card-body -->
-                        </div>
-                        <!-- /.card -->
-
-
-                        <!-- PIE CHART -->
-                        <div class="card card-danger">
-                            <div class="card-header">
-                                <h3 class="card-title">Total Ventas Vendedores</h3>
-
-                                <div class="card-tools">
-                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                        <i class="fas fa-minus"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-tool" data-card-widget="remove">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <canvas id="pieChart"
-                                    style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                            </div>
-                            <!-- /.card-body -->
-                        </div>
-                        <!-- /.card -->
-
                         <!-- STACKED BAR CHART -->
                         <div class="card card-success">
                             <div class="card-header">
@@ -262,6 +215,29 @@
                         </div>
                         <!-- /.card -->
 
+                        <!-- PIE CHART -->
+                        <div class="card card-danger">
+                            <div class="card-header">
+                                <h3 class="card-title">Total Ventas Vendedores</h3>
+
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="pieChart"
+                                    style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+
+                        
                     </div>
                     <!-- /.col (RIGHT) -->
                 </div>

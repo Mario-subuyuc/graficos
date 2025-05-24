@@ -17,7 +17,8 @@ class AdminController extends Controller
     public function index()
     {
         $total_usuarios = User::count();
-        $total_ventas = Venta::count();
+        $total_ventas1 = Venta::count();
+        $total_ventas2 = Venta::whereYear('fecha', 2025)->count();
         $limiteTiempo = Carbon::now()->subSeconds(30)->timestamp;
 
 
@@ -58,19 +59,19 @@ class AdminController extends Controller
             $totalVentas2025[$mes] += $venta['total'];
         }
 
-        //ventas totales por articulo 2025
+        //compras totales por articulo 2025
         $ventasProducto2025 = $ventas2025->groupBy('articulo')->map(function ($ventas) {
             return $ventas->sum('cantidad');
         });
 
-        //ventas totales por usuario 2025
+        //compras totales por usuario 2025
         $ventasUsuario2025 = $ventas2025->groupBy(function ($venta) {
             return $venta->usuario->name;
         })->map(function ($ventas) {
             return $ventas->sum('total');
         });
 
-        //ventas totales por cliente 2025
+        //compras totales por cliente 2025
         $ventasPorCliente = DB::table('ventas')
             ->select('cliente', DB::raw('SUM(total) as total_compras'))
             ->whereYear('fecha', 2025)  // Filtrar solo ventas del año 2025
@@ -180,7 +181,7 @@ class AdminController extends Controller
         // 3. Promedio de ingreso por venta (hoy)
         $promedioVenta = DB::table('ventas')
             ->whereDate('fecha', $hoy)
-            ->avg(DB::raw('cantidad'));
+            ->sum(DB::raw('total'));
 
         // 4. Total de transacciones del día (ventas realizadas)
         $transaccionesHoy = DB::table('ventas')
@@ -200,7 +201,8 @@ class AdminController extends Controller
             'barChartData',
             'barChartDataMetodoPago',
             'total_usuarios',
-            'total_ventas',
+            'total_ventas1',
+            'total_ventas2',
             'total_online',
             //'productosPorMes',
             'ventasHoy',

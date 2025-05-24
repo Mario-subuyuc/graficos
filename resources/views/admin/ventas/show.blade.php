@@ -59,7 +59,7 @@
                                     <input type="text" value="{{ $venta->cliente }}" class="form-control" readonly>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            {{-- <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="cliente">Creado en</label>
                                     <input type="text" value="{{ $venta->created_at }}" class="form-control" readonly>
@@ -70,7 +70,7 @@
                                     <label for="cliente">Ultima actualización</label>
                                     <input type="text" value="{{ $venta->updated_at }}" class="form-control" readonly>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                         <hr>
                         <div class="row">
